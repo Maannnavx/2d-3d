@@ -30,6 +30,9 @@ class Vector:
     def __mul__(self, scalar):
         new_components = tuple(c * scalar for c in self.components)
         return Vector(*new_components)
+    
+    def dot(self, other):
+        return sum(a * b for a, b in zip(self.components, other.components))
 
 
 class Vector2D(Vector):
@@ -45,3 +48,9 @@ class Vector3D(Vector):
         self.x = x
         self.y = y
         self.z = z
+
+    def cross(self, other):
+        return Vector3D(
+        (self.y * other.z) - (self.z * other.y),
+        (self.z * other.x) - (self.x * other.z),
+        (self.x * other.y) - (self.y * other.x))

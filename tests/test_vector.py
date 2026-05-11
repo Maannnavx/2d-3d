@@ -34,3 +34,21 @@ def test_sub():
 def test_mul():
     v1 = Vector2D(2, 3)
     assert (v1 * 3).components == (6, 9)
+
+def test_dot():
+    v1 = Vector2D(2, 3)
+    v2 = Vector2D(4, 1)
+    assert v1.dot(v2) == 11
+
+    v3 = Vector2D(1, 0)
+    v4 = Vector2D(0, 1)
+    assert v3.dot(v4) == 0  # perpendicular
+
+def test_cross():
+    v1 = Vector3D(1, 0, 0)
+    v2 = Vector3D(0, 1, 0)
+    assert v1.cross(v2).components == (0, 0, 1)
+
+    v3 = Vector3D(2, 3, 4)
+    v4 = Vector3D(5, 6, 7)
+    assert v3.cross(v4).components == (-3, 6, -3)
