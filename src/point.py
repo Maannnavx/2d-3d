@@ -7,6 +7,10 @@ class Point:
     def distance_to(self, other):
         return math.sqrt(sum((a - b)**2 for a, b in zip(self.coords, other.coords)))
 
+    def midpoint(self, other):
+        mid_coords = tuple((a + b) / 2 for a, b in zip(self.coords, other.coords))
+        return Point(*mid_coords)
+
     def __repr__(self):
         return f"Point{len(self.coords)}D{self.coords}"
 
