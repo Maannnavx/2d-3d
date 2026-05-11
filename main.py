@@ -1,10 +1,7 @@
 from src.point import Point2D, Point3D
 
-p1 = Point2D(1, 2)
-p2 = Point3D(1, 2, 3)
+p1 = Point2D(3, 4)
+p2 = Point3D(1, 2, 2)
 
-x, y = p1
-print(x, y)  # 1 2
-
-x, y, z = p2
-print(x, y, z)  # 1 2 3
+print(p1.distance_to_origin())  # 5.0
+print(p2.distance_to_origin())  # 3.0

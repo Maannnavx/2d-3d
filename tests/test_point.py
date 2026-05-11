@@ -40,3 +40,9 @@ def test_iter():
     x, y = p1
     assert x == 1
     assert y == 2
+
+def test_distance_to_origin():
+    p1 = Point2D(3, 4)
+    p2 = Point3D(1, 2, 2)
+    assert p1.distance_to_origin() == 5.0
+    assert p2.distance_to_origin() == 3.0

@@ -22,6 +22,10 @@ class Point:
     
     def __iter__(self):
         return iter(self.coords)
+    
+    def distance_to_origin(self):
+        origin = Point(*[0] * len(self.coords))
+        return self.distance_to(origin)
 
 
 class Point2D(Point):
