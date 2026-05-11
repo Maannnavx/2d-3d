@@ -21,3 +21,22 @@ def test_midpoint_3d():
     p4 = Point3D(4, 6, 8)
     mid = p3.midpoint(p4)
     assert mid.coords == (2.5, 4.0, 5.5)
+
+def test_eq():
+    p1 = Point2D(1, 2)
+    p2 = Point2D(1, 2)
+    p3 = Point2D(3, 4)
+    assert p1 == p2
+    assert p1 != p3
+
+def test_len():
+    p1 = Point2D(1, 2)
+    p2 = Point3D(1, 2, 3)
+    assert len(p1) == 2
+    assert len(p2) == 3
+
+def test_iter():
+    p1 = Point2D(1, 2)
+    x, y = p1
+    assert x == 1
+    assert y == 2

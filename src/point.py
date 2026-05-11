@@ -13,6 +13,15 @@ class Point:
 
     def __repr__(self):
         return f"Point{len(self.coords)}D{self.coords}"
+    
+    def __eq__(self, other):
+        return self.coords == other.coords
+    
+    def __len__(self):
+        return len(self.coords)
+    
+    def __iter__(self):
+        return iter(self.coords)
 
 
 class Point2D(Point):
