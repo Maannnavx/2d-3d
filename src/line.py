@@ -37,6 +37,41 @@ class Line:
     def is_perpendicular(self, other):
         return self.direction.dot(other.direction) == 0
 
+    def intersection(self, other):
+        d1 = self.direction.components
+        d2 = other.direction.components
+        p1 = self.point.coords
+        p2 = other.point.coords
+
+        cross = d1[0] * d2[1] - d1[1] * d2[0]
+        if round(cross, 10) == 0:
+            return None  # lines are parallel, no intersection
+
+        dx = p2[0] - p1[0]
+        dy = p2[1] - p1[1]
+        t = (dx * d2[1] - dy * d2[0]) / cross
+        return self.point_at(t)
+    
+    def closest_points(self, other):
+        d1 = self.direction.components
+        d2 = other.direction.components
+        p1 = self.point.coords
+        p2 = other.point.coords
+
+        w = tuple(p1[i] - p2[i] for i in range(len(p1)))
+        a = sum(a * b for a, b in zip(d1, d1))
+        b = sum(a * b for a, b in zip(d1, d2))
+        c = sum(a * b for a, b in zip(d2, d2))
+        d = sum(a * b for a, b in zip(d1, w))
+        e = sum(a * b for a, b in zip(d2, w))
+
+        denom = a * c - b * b
+        if round(denom, 10) == 0:
+            return None  # lines are parallel
+
+        t1 = (b * e - c * d) / denom
+        t2 = (a * e - b * d) / denom
+        return self.point_at(t1), other.point_at(t2)
 
 class Line2D(Line):
     def __init__(self, point: Point2D, direction: Vector2D):

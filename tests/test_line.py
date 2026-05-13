@@ -36,3 +36,26 @@ def test_is_perpendicular():
     l3 = Line2D(Point2D(0, 5), Vector2D(1, 0))
     assert l1.is_perpendicular(l2) == True
     assert l1.is_perpendicular(l3) == False
+
+def test_intersection():
+    l1 = Line2D(Point2D(0, 0), Vector2D(1, 0))
+    l2 = Line2D(Point2D(0, 0), Vector2D(0, 1))
+    l3 = Line2D(Point2D(0, 5), Vector2D(1, 0))
+    assert l1.intersection(l2).coords == (0.0, 0.0)
+    assert l1.intersection(l3) is None
+
+def test_closest_points():
+    l1 = Line3D(Point3D(0, 0, 0), Vector3D(1, 0, 0))
+    l2 = Line3D(Point3D(0, 1, 1), Vector3D(0, 1, 0))
+    result = l1.closest_points(l2)
+    assert result[0].coords == (0.0, 0.0, 0.0)
+    assert result[1].coords == (0.0, 0.0, 1.0)
+
+from src.line import Line3D
+
+def test_intersection_with_line():
+    pl = Plane(Point3D(0, 0, 0), Vector3D(0, 0, 1))
+    l1 = Line3D(Point3D(0, 0, 5), Vector3D(0, 0, -1))
+    l2 = Line3D(Point3D(0, 0, 5), Vector3D(1, 0, 0))
+    assert pl.intersection_with_line(l1).coords == (0.0, 0.0, 0.0)
+    assert pl.intersection_with_line(l2) is None

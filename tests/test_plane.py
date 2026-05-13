@@ -1,6 +1,7 @@
 from src.plane import Plane
 from src.point import Point3D
 from src.vector import Vector3D
+from src.line import Line3D
 
 def test_plane_repr():
     pl = Plane(Point3D(0, 0, 0), Vector3D(0, 0, 1))
@@ -37,3 +38,20 @@ def test_is_perpendicular():
     pl3 = Plane(Point3D(0, 0, 5), Vector3D(0, 0, 1))
     assert pl1.is_perpendicular(pl2) == True
     assert pl1.is_perpendicular(pl3) == False
+
+def test_intersection_with_line():
+    pl = Plane(Point3D(0, 0, 0), Vector3D(0, 0, 1))
+    l1 = Line3D(Point3D(0, 0, 5), Vector3D(0, 0, -1))
+    l2 = Line3D(Point3D(0, 0, 5), Vector3D(1, 0, 0))
+    assert pl.intersection_with_line(l1).coords == (0.0, 0.0, 0.0)
+    assert pl.intersection_with_line(l2) is None
+
+def test_intersection_with_plane():
+    pl1 = Plane(Point3D(0, 0, 0), Vector3D(0, 0, 1))
+    pl2 = Plane(Point3D(0, 0, 0), Vector3D(0, 1, 0))
+    pl3 = Plane(Point3D(0, 0, 5), Vector3D(0, 0, 1))
+    
+    result = pl1.intersection_with_plane(pl2)
+    assert result is not None
+    assert result.direction.components == (-1, 0, 0)
+    assert pl1.intersection_with_plane(pl3) is None

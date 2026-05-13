@@ -1,5 +1,6 @@
 from src.point import Point3D
 from src.vector import Vector3D
+from src.line import Line3D
 
 class Plane:
     def __init__(self, point: Point3D, normal: Vector3D):
@@ -30,3 +31,48 @@ class Plane:
 
     def is_perpendicular(self, other):
         return round(self.normal.dot(other.normal), 10) == 0
+    
+    def intersection_with_line(self, line):
+        d = self.normal.dot(Vector3D(*line.direction.components))
+        if round(d, 10) == 0:
+            return None  # line is parallel to plane
+
+        v = Vector3D(
+            line.point.x - self.point.x,
+            line.point.y - self.point.y,
+            line.point.z - self.point.z
+        )
+        t = -self.normal.dot(v) / d
+        return line.point_at(t)
+    
+    def intersection_with_plane(self, other):
+        direction = self.normal.cross(other.normal)
+        if all(round(c, 10) == 0 for c in direction.components):
+            return None  # planes are parallel
+
+        n1 = self.normal.components
+        n2 = other.normal.components
+        d1 = sum(n1[i] * self.point.coords[i] for i in range(3))
+        d2 = sum(n2[i] * other.point.coords[i] for i in range(3))
+
+        # try XY plane first
+        denom = n1[0]*n2[1] - n1[1]*n2[0]
+        if round(denom, 10) != 0:
+            x = (d1*n2[1] - d2*n1[1]) / denom
+            y = (d2*n1[0] - d1*n2[0]) / denom
+            point = Point3D(x, y, 0)
+        else:
+            # try YZ plane
+            denom = n1[1]*n2[2] - n1[2]*n2[1]
+            if round(denom, 10) != 0:
+                y = (d1*n2[2] - d2*n1[2]) / denom
+                z = (d2*n1[1] - d1*n2[1]) / denom
+                point = Point3D(0, y, z)
+            else:
+                # try XZ plane
+                denom = n1[0]*n2[2] - n1[2]*n2[0]
+                x = (d1*n2[2] - d2*n1[2]) / denom
+                z = (d2*n1[0] - d1*n2[0]) / denom
+                point = Point3D(x, 0, z)
+
+        return Line3D(point, direction)
