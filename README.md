@@ -25,7 +25,7 @@ Includes data types for Points, Vectors, Lines, and Planes with a full suite of 
 ## Installation
 
 ```bash
-git clone git@github.com:maannnavx/2d-3d.git
+git clone git@github.com:Maannnavx/2d-3d.git
 cd 2d-3d
 python3 -m venv .venv
 source .venv/bin/activate
